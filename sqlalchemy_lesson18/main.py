@@ -1,16 +1,24 @@
-# This is a sample Python script.
+from sqlalchemy import Column, Integer, String, create_engine
+from sqlalchemy.ext.declarative import declarative_base
 
-# Press Shift+F10 to execute it or replace it with your code.
-# Press Double Shift to search everywhere for classes, files, tool windows, actions, and settings.
+engine = create_engine('sqlite:///orm.sqlite', echo=True)
 
-
-def print_hi(name):
-    # Use a breakpoint in the code line below to debug your script.
-    print(f'Hi, {name}')  # Press Ctrl+F8 to toggle the breakpoint.
+Base = declarative_base()
 
 
-# Press the green button in the gutter to run the script.
-if __name__ == '__main__':
-    print_hi('PyCharm')
+class Region(Base):
+    __tablename__ = 'region'
+    id = Column(Integer, primary_key=True)
+    name = Column(String)
+    number = Column(Integer, nullable=True)
 
-# See PyCharm help at https://www.jetbrains.com/help/pycharm/
+
+    def __init__(self, name, number):
+        self.name = name
+        self.number = number
+
+
+
+
+Base.metadata.create_all(engine)
+
