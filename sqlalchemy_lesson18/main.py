@@ -1,5 +1,6 @@
 from sqlalchemy import Column, Integer, String, create_engine
 from sqlalchemy.ext.declarative import declarative_base
+from sqlalchemy.orm import sessionmaker
 
 engine = create_engine('sqlite:///orm.sqlite', echo=True)
 
@@ -17,8 +18,51 @@ class Region(Base):
         self.name = name
         self.number = number
 
+    def __str__(self):
+        return f'{self.id}) {self.name}: {self.number}'
+
 
 
 
 Base.metadata.create_all(engine)
 
+Session = sessionmaker(bind=engine)
+
+session = Session()
+
+region = Region('Москва', 1)
+
+session.add(region)
+
+region = Region('Петербург', 2)
+
+session.add(region)
+
+session.commit()
+
+region.name = 'Тула'
+
+session.commit()
+
+session.delete(region)
+
+session.commit()
+
+for i in range(10):
+    region = Region(f'region{i}', i)
+    session.add(region)
+
+session.commit()
+
+region_query = session.query(Region)
+
+print(type(region_query))
+
+for region in region_query:
+    print(region.name)
+
+regions = session.query(Region).all()
+
+print(type(regions))
+
+regions = session.query(Region).filter(Region.name == 'Москва' and Region.id > 14).all()
