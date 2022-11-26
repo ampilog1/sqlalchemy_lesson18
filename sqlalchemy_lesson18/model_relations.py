@@ -6,6 +6,11 @@ engine = create_engine('sqlite:///orm.sqlite', echo=False)
 
 Base = declarative_base()
 
+class full_offer(Base):
+    __tablename__ = 'full_offer'
+    id = Column(Integer, primary_key=True)
+    number_offer = Column(Integer, ForeignKey('Number_offer.id'))
+
 vacancyskill = Table('vacancyskill', Base.metadata,
                      Column('id', Integer, primary_key=True),
                      Column('vacancy_id', Integer, ForeignKey('vacancy.id')),
