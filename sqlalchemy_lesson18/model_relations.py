@@ -10,12 +10,18 @@ class full_offer(Base):
     __tablename__ = 'full_offer'
     id = Column(Integer, primary_key=True)
     number_offer = Column(Integer, ForeignKey('Number_offer.id'))
+    vacancy = Column(Integer, ForeignKey('vacancy.id'))
+    region = Column(Integer, ForeignKey('region.id'))
+    skill = Column(Integer, ForeignKey('skill.id'))
 
-vacancyskill = Table('vacancyskill', Base.metadata,
-                     Column('id', Integer, primary_key=True),
-                     Column('vacancy_id', Integer, ForeignKey('vacancy.id')),
-                     Column('skill_id', Integer, ForeignKey('skill.id'))
-                     )
+    def __init__(self, number_offer, vacancy, region, skill):
+        self.number_offer = number_offer
+        self.vacancy = vacancy
+        self.region = region
+        self.skill = skill
+
+    def __str__(self):
+        return f'{self.id}: {self.number_offer}, {self.vacancy}, {self.region}, {self.skill}'
 
 class Skill(Base):
     __tablename__ = 'skill'
@@ -32,27 +38,34 @@ class Region(Base):
     __tablename__ = 'region'
     id = Column(Integer, primary_key=True)
     name = Column(String)
-    number = Column(Integer, nullable=True)
 
-    # note = Column(String, nullable=True)
-
-    def __init__(self, name, number):
+    def __init__(self, name):
         self.name = name
-        self.number = number
 
     def __str__(self):
-        return f'{self.id}) {self.name}: {self.number}'
+        return f'{self.id}: {self.name}'
 
 
 class Vacancy(Base):
     __tablename__ = 'vacancy'
     id = Column(Integer, primary_key=True)
     name = Column(String)
-    # Связь 1 - много, связь внешний ключ
-    region_id = Column(Integer, ForeignKey('region.id'))
 
-    def __init__(self, name, region_id):
+    def __init__(self, name):
         self.name = name
-        self.region_id = region_id
+    def __str__(self):
+        return f'{self.id}: {self.name}'
+
+class Number_offer(Base):
+    __tablename__ = 'Number_offer'
+    id = Column(Integer, primary_key=True)
+    number = Column(String)
+
+    def __init__(self, number):
+        self.number = number
+
+    def __str__(self):
+        return f'{self.id}: {self.number}'
+
 
 Base.metadata.create_all(engine)
