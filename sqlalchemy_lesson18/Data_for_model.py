@@ -9,11 +9,33 @@ conn = sqlite3.connect('TestDB.db')
 # Создаем курсор
 cursor = conn.cursor()
 
-cursor.execute('SELECT * from Region')
+cursor.execute('SELECT name from Region')
 
-result = cursor.fetchall()
-print(result)
-print(type(result))
+region = cursor.fetchall()
+
+cursor.execute('SELECT name from Skills')
+
+skills = cursor.fetchall()
+
+cursor.execute('SELECT name from vacancy')
+
+vacancy = cursor.fetchall()
+
+cursor.execute('SELECT number from Number_offer')
+
+number_offer = cursor.fetchall()
+
+# print(region)
+#
+# print(skills)
+#
+# print(vacancy)
+#
+# print(number_offer)
+
+
+# print(region)
+# print(type(region))
 
 # engine = create_engine('sqlite:///orm.sqlite', echo=True)
 #
