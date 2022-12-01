@@ -25,12 +25,15 @@ cursor.execute('SELECT number from Number_offer')
 
 number_offer = cursor.fetchall()
 
-# print(region)
+for name in region:
+    print(name)
+    print(type(name))
+
 #
 # print(skills)
-#
+# #
 # print(vacancy)
-#
+# #
 # print(number_offer)
 
 
