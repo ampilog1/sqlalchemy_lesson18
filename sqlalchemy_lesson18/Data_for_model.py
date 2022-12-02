@@ -25,9 +25,12 @@ cursor.execute('SELECT number from Number_offer')
 
 number_offer = cursor.fetchall()
 
-for name in region:
-    print(name)
-    print(type(name))
+full_offer_list = []
+for row in cursor.execute('SELECT number_offer, vacancy, region, skill FROM full_offer ORDER BY number_offer'):
+    full_offer_list.append(row)
+
+print(full_offer_list)
+print(type(full_offer_list[1][3]))
 
 #
 # print(skills)
